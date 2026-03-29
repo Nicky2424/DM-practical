@@ -1,0 +1,167 @@
+// Practical 1
+// Aim: To implement a class SET and perform various set operations.
+//
+// Problem Statement:
+// Create a class SET. Create member functions to perform the following SET operations:
+// a. isMember: Check whether an element belongs to the set or not (return true/false).
+// b. powerSet: List all the elements of the power set of a set.
+// c. subset: Check whether one set is a subset of another.
+// d. union and intersection of two sets.
+// e. complement: Assume universal set as per input elements from the user.
+// f. set difference and symmetric difference between two sets.
+// g. cartesian product of sets.
+// Write a menu driven program to perform the above functions.
+
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+
+class SET {
+public:
+    set<int> s, universal;
+
+    void input() {
+        int n, x;
+        cout << "Enter number of elements: ";
+        cin >> n;
+        for(int i=0;i<n;i++){
+            cin >> x;
+            s.insert(x);
+            universal.insert(x); // assuming universal initially same
+        }
+    }
+
+    void inputUniversal() {
+        int n, x;
+        cout << "Enter number of elements in Universal Set: ";
+        cin >> n;
+        for(int i=0;i<n;i++){
+            cin >> x;
+            universal.insert(x);
+        }
+    }
+
+    bool isMember(int x) {
+        return s.find(x) != s.end();
+    }
+
+    void powerSet() {
+        vector<int> v(s.begin(), s.end());
+        int n = v.size();
+        int powSize = 1 << n;
+
+        for(int i=0;i<powSize;i++){
+            cout << "{ ";
+            for(int j=0;j<n;j++){
+                if(i & (1<<j)) cout << v[j] << " ";
+            }
+            cout << "}" << endl;
+        }
+    }
+
+    bool isSubset(SET b) {
+        for(auto x : s){
+            if(b.s.find(x) == b.s.end())
+                return false;
+        }
+        return true;
+    }
+
+    void Union(SET b) {
+        set<int> result = s;
+        result.insert(b.s.begin(), b.s.end());
+        for(auto x : result) cout << x << " ";
+    }
+
+    void Intersection(SET b) {
+        for(auto x : s){
+            if(b.s.find(x) != b.s.end())
+                cout << x << " ";
+        }
+    }
+
+    void Complement() {
+        for(auto x : universal){
+            if(s.find(x) == s.end())
+                cout << x << " ";
+        }
+    }
+
+    void Difference(SET b) {
+        for(auto x : s){
+            if(b.s.find(x) == b.s.end())
+                cout << x << " ";
+        }
+    }
+
+    void SymmetricDifference(SET b) {
+        for(auto x : s){
+            if(b.s.find(x) == b.s.end())
+                cout << x << " ";
+        }
+        for(auto x : b.s){
+            if(s.find(x) == s.end())
+                cout << x << " ";
+        }
+    }
+
+    void Cartesian(SET b) {
+        for(auto x : s){
+            for(auto y : b.s){
+                cout << "(" << x << "," << y << ") ";
+            }
+        }
+    }
+};
+
+int main() {
+    SET A, B;
+    int choice, x;
+
+    cout << "Enter Set A:\n";
+    A.input();
+
+    cout << "Enter Set B:\n";
+    B.input();
+
+    cout << "Enter Universal Set:\n";
+    A.inputUniversal();
+
+    do {
+        cout << "\n1. Is Member\n2. Power Set\n3. Subset\n4. Union\n5. Intersection\n6. Complement\n7. Difference\n8. Symmetric Difference\n9. Cartesian Product\n10. Exit\n";
+        cin >> choice;
+
+        switch(choice){
+            case 1:
+                cout << "Enter element: ";
+                cin >> x;
+                cout << (A.isMember(x) ? "Yes" : "No");
+                break;
+            case 2:
+                A.powerSet();
+                break;
+            case 3:
+                cout << (A.isSubset(B) ? "Subset" : "Not Subset");
+                break;
+            case 4:
+                A.Union(B);
+                break;
+            case 5:
+                A.Intersection(B);
+                break;
+            case 6:
+                A.Complement();
+                break;
+            case 7:
+                A.Difference(B);
+                break;
+            case 8:
+                A.SymmetricDifference(B);
+                break;
+            case 9:
+                A.Cartesian(B);
+                break;
+        }
+    } while(choice != 10);
+}
