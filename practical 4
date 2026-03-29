@@ -1,0 +1,48 @@
+// Practical 4
+// Aim: To find all solutions of the equation using brute force method.
+//
+// Problem Statement:
+// For any number n, write a program to list all the solutions of the equation
+// x1 + x2 + x3 + ... + xn = C,
+// where C is a constant (C <= 10) and x1, x2, x3, ..., xn are non-negative integers.
+// Use brute force strategy to generate all possible solutions.
+
+#include <iostream>
+using namespace std;
+
+int n, C;
+
+// Function to generate solutions
+void solve(int x[], int index, int sum) {
+
+    // If all variables are assigned
+    if(index == n) {
+        if(sum == C) {
+            for(int i = 0; i < n; i++)
+                cout << x[i] << " ";
+            cout << endl;
+        }
+        return;
+    }
+
+    // Try all possible values from 0 to C
+    for(int i = 0; i <= C; i++) {
+        x[index] = i;
+        solve(x, index + 1, sum + i);
+    }
+}
+
+int main() {
+    cout << "Enter value of n: ";
+    cin >> n;
+
+    cout << "Enter value of C (<=10): ";
+    cin >> C;
+
+    int x[10];
+
+    cout << "\nSolutions are:\n";
+    solve(x, 0, 0);
+
+    return 0;
+}
