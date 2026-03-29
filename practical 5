@@ -1,0 +1,45 @@
+// Practical 5
+// Aim: To evaluate a polynomial function using array representation.
+//
+// Problem Statement:
+// Write a program to evaluate a polynomial function.
+// For example, store f(x) = 4x^2 + 2x + 9 in an array
+// and for a given value of x (say x = 5), compute the value of f(x).
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, x;
+
+    cout << "Enter degree of polynomial: ";
+    cin >> n;
+
+    int coeff[n + 1];
+
+    cout << "Enter coefficients (from constant term to highest degree):\n";
+    for(int i = 0; i <= n; i++) {
+        cin >> coeff[i];
+    }
+
+    cout << "Enter value of x: ";
+    cin >> x;
+
+    int result = 0;
+
+    // Evaluating polynomial
+    for(int i = 0; i <= n; i++) {
+        int power = 1;
+
+        // Calculate x^i
+        for(int j = 0; j < i; j++) {
+            power *= x;
+        }
+
+        result += coeff[i] * power;
+    }
+
+    cout << "Value of polynomial = " << result;
+
+    return 0;
+}
