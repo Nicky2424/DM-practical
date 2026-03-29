@@ -1,0 +1,42 @@
+// Practical 7
+// Aim: To compute the in-degree and out-degree of each vertex
+// in a directed graph using adjacency matrix.
+//
+// Problem Statement:
+// Write a program to accept a directed graph G and compute
+// the in-degree and out-degree of each vertex.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+
+    cout << "Enter number of vertices: ";
+    cin >> n;
+
+    int a[10][10];
+
+    cout << "Enter adjacency matrix:\n";
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            cin >> a[i][j];
+        }
+    }
+
+    // Calculate in-degree and out-degree
+    for(int i = 0; i < n; i++) {
+        int indegree = 0, outdegree = 0;
+
+        for(int j = 0; j < n; j++) {
+            outdegree += a[i][j]; // row sum
+            indegree += a[j][i];  // column sum
+        }
+
+        cout << "Vertex " << i << ": ";
+        cout << "In-degree = " << indegree
+             << ", Out-degree = " << outdegree << endl;
+    }
+
+    return 0;
+}
