@@ -1,0 +1,47 @@
+// Practical 6
+// Aim: To check whether a given graph is a complete graph
+// using adjacency matrix representation.
+//
+// Problem Statement:
+// Write a program to check if a given graph is a complete graph.
+// Represent the graph using the adjacency matrix representation.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+
+    cout << "Enter number of vertices: ";
+    cin >> n;
+
+    int a[10][10];
+
+    cout << "Enter adjacency matrix:\n";
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            cin >> a[i][j];
+        }
+    }
+
+    bool isComplete = true;
+
+    // Check conditions for complete graph
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            if(i == j && a[i][j] != 0) {
+                isComplete = false; // no self-loop
+            }
+            if(i != j && a[i][j] != 1) {
+                isComplete = false; // must have edge between all pairs
+            }
+        }
+    }
+
+    if(isComplete)
+        cout << "The graph is a Complete Graph";
+    else
+        cout << "The graph is NOT a Complete Graph";
+
+    return 0;
+}
